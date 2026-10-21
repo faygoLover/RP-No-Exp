@@ -1,0 +1,27 @@
+# RP No-Exp
+
+Микро-мод Minecraft Forge 1.20.1 (Java 17): опыт выключен. Автор — faygoLover (Alex). **С автором общаемся по-русски.**
+
+Мод `rpnoexp`, «RP No-Exp», пакет `faygolover.rpnoexp`, MIT. Часть RP-семейства, **RP Core не требует**.
+Заменяет ресурспак Red XP и полоску опыта; в RP Fixes это сознательно не кладём (решение Alex 21.10.2026).
+
+## Состояние
+- **21.10.2026, 1.0.0:** нет сфер опыта, опыт ни от чего не прибавляется, полоски опыта нет; `/xp` работает.
+  В сборке `S5 Packs` (слой common). В игре не проверено.
+
+## Устройство
+- `RpNoExp` — события:
+  - `EntityJoinLevelEvent` — `ExperienceOrb` не попадает в мир (новые и загруженные с чанком);
+  - `PlayerXpEvent.XpChange` / `LevelChange` — плюс отменяется, минус проходит (зачарование, наковальня тратят уровни).
+- `mixin/ExperienceCommandMixin` — пока `/xp add` начисляет, `RpNoExp.commandDepth > 0` и начисление открыто.
+  `/xp set` событий не шлёт.
+- `client/HideBar` — не рисуется слой `VanillaGuiOverlay.EXPERIENCE_BAR` (полоска + число уровня).
+- `NoExpConfig` — `config/rpnoexp-common.toml`: `no_orbs`, `no_gain`, `hide_bar`.
+- Опыт, что уже есть у игроков, не трогаем.
+
+## Сборка
+JDK 17: `JAVA_HOME="C:/Program Files/Eclipse Adoptium/jdk-17.0.14.7-hotspot"`, затем `gradlew.bat build` → `build/libs`.
+
+## Правила работы
+Как в остальных RP-модах: делаю только согласованное, сам тесты и игру не запускаю — собираю, даю автору план
+проверки. Комментарии и строки конфига — по-русски. Коммиты — только по просьбе автора.
